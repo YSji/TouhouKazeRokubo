@@ -5,7 +5,7 @@ using UnityEngine;
 public class danController : MonoBehaviour,IResetable
 {
     float _start ;
-    float _speed=20;
+    public float _speed=4;
     float _lifeTime = 10;
 
     public void Reset()

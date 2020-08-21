@@ -86,7 +86,8 @@ public class GameManager : Singleton<GameManager>
         {
             if (_isPause)
             {
-                GamePause();
+                buttonPause.transform.GetChild(0).GetComponent<Text>().text = "暂停";
+                _isPause = false;
             }
             StartCoroutine(GameStartWait());
             buttonStart.transform.GetChild(0).GetComponent<Text>().text = "结束";

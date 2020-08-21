@@ -7,18 +7,18 @@ public class JadeController : MonoBehaviour
     public  GameObject _bullet;
     
 
-    public Vector3 _target;
+    Vector3 _target;
 
-    public bool _isMove;
+    bool _isMove;
 
     float _speed;
 
-    public float _speedPri;
+    float _speedPri;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        _speedPri = 8;
     }
 
     private void FixedUpdate()
@@ -100,6 +100,7 @@ public class JadeController : MonoBehaviour
             Color color = Color.HSVToRGB(((float)i) / n, 0.6f, 1f);
             color.a = 0.8f;
             _instanceCube.GetComponent<SpriteRenderer>().color = color;
+            _instanceCube.GetComponent<danController>()._speed = 4f;
             //_instanceCube.GetComponent<SpriteRenderer>().color = Color.HSVToRGB((float)i/n, 0.6f, 0.6f);
         }
     }
@@ -107,5 +108,21 @@ public class JadeController : MonoBehaviour
    public void CreateRandomAngleBarrage(float angleRange)
     {
 
+    }
+   public void CreateBigBarrage()
+    {
+        GameObject _instanceCube = ObjectPool.Instance.GetGObject("Prefabs/dan-2");
+        _instanceCube.transform.position = transform.position;
+        _instanceCube.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        _instanceCube.transform.Rotate(new Vector3(0, 0,Random.Range(75f,105f)));
+        _instanceCube.GetComponent<danController>()._speed = 6f;
+    } 
+    public void CreateRandomSingleBarrage()
+    {
+        GameObject _instanceCube = ObjectPool.Instance.GetGObject("Prefabs/dan-3");
+        _instanceCube.transform.position = transform.position;
+        _instanceCube.transform.localRotation = transform.localRotation;
+        _instanceCube.transform.Rotate(new Vector3(0, 0,Random.Range(0f,5f)));
+        _instanceCube.GetComponent<danController>()._speed = 6f;
     }
 }

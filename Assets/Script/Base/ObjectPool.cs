@@ -21,7 +21,7 @@ public class ObjectPool:Singleton<ObjectPool>
             gObj.name = name;
         }
         return gObj;
-    }
+    } 
     public void ReCircleObj(string name,GameObject gObj)
     {
         gObj.SetActive(false);

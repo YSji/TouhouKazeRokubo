@@ -35,12 +35,12 @@ public class PlayerContraller : MonoBehaviour
     {
         if (!GameManager.Instance._isPause)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 speed /= shiftRate;
                 check.SetActive(true);
             }
-            if (Input.GetKeyUp(KeyCode.LeftShift))
+            if (Input.GetKeyUp(KeyCode.Space))
             {
                 speed = speedPrf;
                 check.SetActive(false);
@@ -97,7 +97,7 @@ public class PlayerContraller : MonoBehaviour
     }
     public void Reset()
     {
-        transform.position = new Vector3(-42,0,0);
+        transform.position = new Vector3(-7,0,0);
 
         _getHitCD = 1;
     }

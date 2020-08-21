@@ -15,6 +15,6 @@ public class JadeTargetContraller : MonoBehaviour
     {
         if(!GameManager.Instance._isPause)
             //transform.RotateAround(transform.parent.position, new Vector3(1, 0, 1), Audio._bufferBand[2]*2+1);
-            transform.RotateAround(transform.parent.position, new Vector3(0, 0, 1), Audio._bufferBand[2]*2+1);
+            transform.RotateAround(transform.parent.position, new Vector3(0, 0, 1), Audio._bufferBand[2]*4+1);
     }
 }

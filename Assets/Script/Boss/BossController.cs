@@ -13,16 +13,17 @@ public class BossController : MonoBehaviour
     public float _stayTime;
     //BossBaseState _currentState;
     //public BossStandbyState standbyState= new BossStandbyState();
-    public GameObject jadeTargetPrefabe;
-    public GameObject jadePrefabe;
-    int _jade_Count=6;
-    GameObject[] jadeTargetList;
-    GameObject[] jadeList;
+    public GameObject _jadeTargetPrefabe;
+    public float _jadeDir;
+    public GameObject _jadePrefabe;
+    int _jade_Count=2;
+    GameObject[] _jadeTargetList;
+    GameObject[] _jadeList;
 
-    int bandLength;
-    public float[] oldBuffBands;
-    public float[] Onset;
-    public float OnsetCD;
+    int _bandLength;
+    public float[] _oldBuffBands;
+    public float[] _onsetCheckList;
+    public float _onsetCD;
 
     Vector3 leftBtm_cornerPos;
     Vector3 rightTop_cornerPos;
@@ -50,12 +51,12 @@ public class BossController : MonoBehaviour
         CreateJadeTarget();
         CreateJade();
 
-        bandLength = Audio._normBufferBand.Length;
-        oldBuffBands = new float[bandLength];
-        Onset = new float[bandLength];
+        _bandLength = Audio._normBufferBand.Length;
+        _oldBuffBands = new float[_bandLength];
+        _onsetCheckList = new float[_bandLength];
         for (int i = 0; i < Audio._normBufferBand.Length; i++)
         {
-            oldBuffBands[i] = 0;
+            _oldBuffBands[i] = 0;
         }
     }
 
@@ -91,8 +92,8 @@ public class BossController : MonoBehaviour
     }
     public void SetTarget()
     {
-        float x = 0.7f - Mathf.Pow(Audio._normBufferBand[4] - 0.5f, 2);
-        float y = (Audio._normBufferBand[3] + 0.5f)%1*0.8f+0.1f;
+        float x = 0.8f - ((Audio._normBufferBand[6] + 0.5f) % 1 * 0.8f + 0.1f)*0.2f;
+        float y = (Audio._normBufferBand[6] + 0.5f)%1*0.8f+0.1f;
        _target = Camera.main.ViewportToWorldPoint(new Vector3(x,y,10));
         _isMove = true;
     }
@@ -148,20 +149,20 @@ public class BossController : MonoBehaviour
 
     public void CreateJadeTarget()
     {
-        jadeTargetList = new GameObject[_jade_Count];
+        _jadeTargetList = new GameObject[_jade_Count];
         float rotaStep = 360f / _jade_Count;
         for (int i = 0; i < _jade_Count; i++)
         {
             
-            GameObject _instanceCube = Instantiate(jadeTargetPrefabe);
+            GameObject _instanceCube = Instantiate(_jadeTargetPrefabe);
             Transform tf = _instanceCube.transform;
             tf.parent = transform;
             _instanceCube.transform.position = transform.position;
             //_instanceCube.transform.rotation = transform.rotation;
             //tf.Rotate(new Vector3(0, 45, 0), Space.Self);
             tf.Rotate(new Vector3(0, 0, i * rotaStep), Space.Self);
-            tf.localPosition += tf.up * 9;
-            jadeTargetList[i]=_instanceCube;
+            tf.localPosition += tf.up * _jadeDir;
+            _jadeTargetList[i]=_instanceCube;
 
         }
     }
@@ -169,17 +170,17 @@ public class BossController : MonoBehaviour
     {
         for (int i = 0; i < _jade_Count; i++)
         {
-            jadeList[i].GetComponent<JadeController>().SetTarget(jadeTargetList[i].transform.position);
+            _jadeList[i].GetComponent<JadeController>().SetTarget(_jadeTargetList[i].transform.position);
         }
     }
     public void CreateJade()
     {
-        jadeList = new GameObject[_jade_Count];
+        _jadeList = new GameObject[_jade_Count];
         float rotaStep = 360f / _jade_Count;
         for (int i = 0; i < _jade_Count; i++)
         {
 
-            GameObject _instanceCube = Instantiate(jadePrefabe);
+            GameObject _instanceCube = Instantiate(_jadePrefabe);
             Transform tf = _instanceCube.transform;
             //tf.parent = transform;
             _instanceCube.transform.position = transform.position;
@@ -190,70 +191,76 @@ public class BossController : MonoBehaviour
             //tf.rotation = Quaternion.Euler(0,0,90);
             //tf.position = new Vector3(tf.position.x, tf.position.y, 0);
             //_instanceCube.GetComponent<SpriteRenderer>().color = Color.HSVToRGB((float)i / _jade_Count, 0.6f, 0.6f);
-            jadeList[i] = _instanceCube;
+            _jadeList[i] = _instanceCube;
         }
     }
 
     public void CheackOnSet()
     {
-        for (int i = 0; i < bandLength; i++)
+        for (int i = 0; i < _bandLength; i++)
         {
-            Onset[i] -= Time.deltaTime;
-            if (Onset[i] <= 0)
+            _onsetCheckList[i] -= Time.deltaTime;
+            if (_onsetCheckList[i] <= 0)
             {
 
-                if (oldBuffBands[i] > 0.1)
+                if (_oldBuffBands[i] > 0.05)
                 {
-                    float check = oldBuffBands[i];
-                    if (Audio._normBufferBand[i] - oldBuffBands[i] > (check>0.4?check*0.2:0.08) )
+                    float check = _oldBuffBands[i];
+                    if (Audio._normBufferBand[i] - _oldBuffBands[i] >(check>0.5? check*0.2:0.1))
                     {
-                        Onset[i] = OnsetCD;
+                        _onsetCheckList[i] = _onsetCD;
                         OnOnSet(i);
                     }
                 }
             }
         }
 
-        Audio._normBufferBand.CopyTo(oldBuffBands, 0);
+        Audio._normBufferBand.CopyTo(_oldBuffBands, 0);
     }
     void OnOnSet(int i)
     {
 
-        if (!_isMove)
-        {
-            switch (i)
-            {
-                case (1):
-                    jadeList[0].GetComponent<JadeController>().CreateAngleBarrage(6, 10);
-                    break;
-                case (9):
-                    jadeList[3].GetComponent<JadeController>().CreateAngleBarrage(6, 10);
-                    break;
-                default:
-                    break;
-            }
-        }
-
+        //if (!_isMove)
+        //{
         switch (i)
         {
-            case (3):
-                jadeList[1].GetComponent<JadeController>().CreateAngleBarrage(1, 0);
+            case (2):
+                _jadeList[0].GetComponent<JadeController>().CreateBigBarrage();
                 break;
-            case (4):
-                jadeList[2].GetComponent<JadeController>().CreateAngleBarrage(1, 0);
+            case (1):
+                _jadeList[0].GetComponent<JadeController>().CreateBigBarrage();
                 break;
-            case (5):
-                jadeList[3].GetComponent<JadeController>().CreateAngleBarrage(1, 0);
+            case (9):
+                _jadeList[1].GetComponent<JadeController>().CreateAngleBarrage(6, 10);
                 break;
-            case (6):
-                jadeList[4].GetComponent<JadeController>().CreateAngleBarrage(1, 0);
-                break;
-            case (7):
-                jadeList[5].GetComponent<JadeController>().CreateAngleBarrage(1, 0);
-                break;
+            //case (10):
+            //    _jadeList[1].GetComponent<JadeController>().CreateAngleBarrage(6, 10);
+            //    break;
             default:
                 break;
         }
+        //}
+
+        if (i>2&&i<8)
+        {
+                CreateSingleBarrage();
+
+        }
+    }
+    void CreateSingleBarrage()
+    {
+        Vector3 v;
+        if (GameManager.Instance._isStart)
+            v = (GetPlayerTransform.tf.position - transform.position).normalized;
+        //v = (GetPlayerTransform.tf.position - GetBossTransform.tf.position).normalized;
+        else v = new Vector3(-1, 0, 0);
+
+        GameObject _instanceCube = ObjectPool.Instance.GetGObject("Prefabs/dan-3");
+        _instanceCube.transform.position = transform.position;
+        _instanceCube.transform.localRotation = transform.localRotation;
+        _instanceCube.transform.up=v;
+        _instanceCube.transform.Rotate(new Vector3(0,0, Random.Range(-5f, 5f)));
+        _instanceCube.GetComponent<danController>()._speed = 7f;
     }
     //public void TransitionToState(BossBaseState state)
     //{
@@ -262,12 +269,12 @@ public class BossController : MonoBehaviour
     //}
     public void Reset()
     {
-        transform.position = Vector3.zero;
+        transform.position = new Vector3(3.8f,0,0);
         _target = Vector3.zero;
-        _isMove = true;
+        _isMove = false;
         for (int i = 0; i < _jade_Count; i++)
         {
-            jadeList[i].transform.localPosition = Vector3.zero;
+            _jadeList[i].transform.localPosition = Vector3.zero;
         }
     }
 }

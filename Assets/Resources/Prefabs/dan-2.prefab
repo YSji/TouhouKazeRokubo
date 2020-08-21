@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4909706374756060844}
   - component: {fileID: 1113991419663237581}
   m_Layer: 0
-  m_Name: dan-1
+  m_Name: dan-2
   m_TagString: Barrage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,8 +72,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 9203d0aa59038454ea3a25ef32e2cf7e, type: 3}
-  m_Color: {r: 1, g: 0.5, b: 0.6916666, a: 0.42745098}
+  m_Sprite: {fileID: 21300000, guid: 71abe7ec05252b4439c59c5dee522ef4, type: 3}
+  m_Color: {r: 1, g: 0.24426669, b: 0.12800002, a: 0.8}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -108,6 +108,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.012717634, y: -0.01903832}
+  m_Offset: {x: -0.037756205, y: 0.18610096}
   serializedVersion: 2
-  m_Radius: 0.2376813
+  m_Radius: 0.90317726

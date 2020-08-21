@@ -21,12 +21,12 @@ public class UIManager : Singleton<UIManager>
     public GameObject _sampleRectangle;
     public GameObject _sampleAmpBand;
 
-    public GameObject _ampBand;
-    public GameObject _ampBandBuff;
-    public GameObject _ampNormBandBuff;
+    //GameObject _ampBand;
+    //GameObject _ampBandBuff;
+    GameObject _ampNormBandBuff;
 
-     ArrayList _Rectangles_Freq=new ArrayList();
-     ArrayList _Rectangles_Buff = new ArrayList();
+     //ArrayList _Rectangles_Freq=new ArrayList();
+     //ArrayList _Rectangles_Buff = new ArrayList();
      ArrayList _Rectangles_NormBuff = new ArrayList();
 
 
@@ -86,7 +86,7 @@ public class UIManager : Singleton<UIManager>
     {
         //_count_bands++;
         float sampleWidth = _sampleRectangle.GetComponent<RectTransform>().rect.width;
-        float spacing = (_panelWidth - 2 * offsetX - (n_Rectangles -1)* sampleWidth) / (n_Rectangles - 1);
+        float spacing = (_panelWidth - 2 * offsetX - sampleWidth) / (n_Rectangles - 1);
         float posX = spacing+sampleWidth;
         float posY = _height_Bands * _count_bands + offsetY;
 
@@ -96,9 +96,9 @@ public class UIManager : Singleton<UIManager>
             ampBand = Instantiate(_sampleAmpBand);
             Transform tf_a = ampBand.GetComponent<Transform>();
             RectTransform rt_a = ampBand.GetComponent<RectTransform>();
-            tf_a.SetParent(_ts_Panel);
+            rt_a.SetParent(_ts_Panel);
             rt_a.anchoredPosition3D = new Vector3(0, posY, 0);
-            rt_a.localScale=new Vector3(1, rt_a.localScale.y, 1);
+            rt_a.localScale=new Vector3(1, 1, 1);
             rt_a.sizeDelta = new Vector2(_panelWidth-2*offsetX, 0);
             ampBand.name = "AmpBand" + "_" + _count_bands ;
         }
@@ -112,9 +112,10 @@ public class UIManager : Singleton<UIManager>
 
             Transform tf_r = insReatangl.GetComponent<Transform>();
             RectTransform rt_r = insReatangl.GetComponent<RectTransform>();
-            tf_r.SetParent(_ts_Panel);
+            rt_r.SetParent(_ts_Panel);
+            rt_r.localScale = new Vector3(1, 1, 1);
             //insReatangl.GetComponent<RectTransform>().pivot = new Vector2(offsetX, offsetY);
-            rt_r.anchoredPosition3D = new Vector3(posX * i + offsetX, posY, 0);
+            rt_r.anchoredPosition3D = new Vector3(spacing * i + offsetX, posY, 0);
             //tf.SetPositionAndRotation(new Vector3(posX * i + offsetX, posY, 0),new Quaternion(0,0,0,0));
             insReatangl.name = "Rectangle" + "_" + _count_bands + "_" + i;
             rectangls.Add(insReatangl);
@@ -144,7 +145,7 @@ public class UIManager : Singleton<UIManager>
         int n_Rectangles =Mathf.Min( rectangls.Count,data.Length);
 
         RectTransform rt_a = ampBand.GetComponent<RectTransform>();
-        rt_a.sizeDelta = new Vector2(rt_a.rect.width, amp*_scale_Band*_scale_Amp);
+        rt_a.sizeDelta = new Vector2(rt_a.rect.width, amp*_scale_Amp);
 
         for (int i = 0; i < n_Rectangles; i++)
         {
