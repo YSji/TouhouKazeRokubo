@@ -6,10 +6,8 @@ using UnityEngine;
 public class CamreaController : MonoBehaviour
 {
     //想要的 宽比
-    float ScaleWithWidth = 16f;
     float _width = 16f;
     //想要的 高比
-    float ScaleWithHight = 9f;
     float _hight = 9f;
 
     private void Start()
@@ -20,8 +18,6 @@ public class CamreaController : MonoBehaviour
     private Camera MAIN_CAMERA;
     private float rectHight;
     private float rectwidth;
-    private float widthShoudSize;
-    private float heightShoudSize;
 
     private void ScreeneResolution()
     {

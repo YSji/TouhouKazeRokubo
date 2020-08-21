@@ -100,7 +100,7 @@ public class JadeController : MonoBehaviour
             Color color = Color.HSVToRGB(((float)i) / n, 0.6f, 1f);
             color.a = 0.8f;
             _instanceCube.GetComponent<SpriteRenderer>().color = color;
-            _instanceCube.GetComponent<danController>()._speed = 4f;
+            _instanceCube.GetComponent<danController>()._speed = 2.5f;
             //_instanceCube.GetComponent<SpriteRenderer>().color = Color.HSVToRGB((float)i/n, 0.6f, 0.6f);
         }
     }
@@ -115,7 +115,7 @@ public class JadeController : MonoBehaviour
         _instanceCube.transform.position = transform.position;
         _instanceCube.transform.localRotation = Quaternion.Euler(Vector3.zero);
         _instanceCube.transform.Rotate(new Vector3(0, 0,Random.Range(75f,105f)));
-        _instanceCube.GetComponent<danController>()._speed = 6f;
+        _instanceCube.GetComponent<danController>()._speed = 2f;
     } 
     public void CreateRandomSingleBarrage()
     {
@@ -123,6 +123,6 @@ public class JadeController : MonoBehaviour
         _instanceCube.transform.position = transform.position;
         _instanceCube.transform.localRotation = transform.localRotation;
         _instanceCube.transform.Rotate(new Vector3(0, 0,Random.Range(0f,5f)));
-        _instanceCube.GetComponent<danController>()._speed = 6f;
+        _instanceCube.GetComponent<danController>()._speed = 3.5f;
     }
 }

@@ -206,7 +206,7 @@ public class BossController : MonoBehaviour
                 if (_oldBuffBands[i] > 0.05)
                 {
                     float check = _oldBuffBands[i];
-                    if (Audio._normBufferBand[i] - _oldBuffBands[i] >(check>0.5? check*0.2:0.1))
+                    if (Audio._normBufferBand[i] - _oldBuffBands[i] >(check>0.25? check*0.2:0.05))
                     {
                         _onsetCheckList[i] = _onsetCD;
                         OnOnSet(i);
@@ -227,11 +227,11 @@ public class BossController : MonoBehaviour
             case (2):
                 _jadeList[0].GetComponent<JadeController>().CreateBigBarrage();
                 break;
-            case (1):
-                _jadeList[0].GetComponent<JadeController>().CreateBigBarrage();
-                break;
+            //case (1):
+            //    _jadeList[0].GetComponent<JadeController>().CreateBigBarrage();
+            //    break;
             case (9):
-                _jadeList[1].GetComponent<JadeController>().CreateAngleBarrage(6, 10);
+                _jadeList[1].GetComponent<JadeController>().CreateAngleBarrage(12, 6);
                 break;
             //case (10):
             //    _jadeList[1].GetComponent<JadeController>().CreateAngleBarrage(6, 10);
@@ -259,8 +259,8 @@ public class BossController : MonoBehaviour
         _instanceCube.transform.position = transform.position;
         _instanceCube.transform.localRotation = transform.localRotation;
         _instanceCube.transform.up=v;
-        _instanceCube.transform.Rotate(new Vector3(0,0, Random.Range(-5f, 5f)));
-        _instanceCube.GetComponent<danController>()._speed = 7f;
+        _instanceCube.transform.Rotate(new Vector3(0,0, Random.Range(-30f, 30f)));
+        _instanceCube.GetComponent<danController>()._speed = 2.7f;
     }
     //public void TransitionToState(BossBaseState state)
     //{

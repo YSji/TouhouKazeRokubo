@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7919517263371644547}
   - component: {fileID: 7919517263371644546}
   - component: {fileID: 4909706374756060844}
-  - component: {fileID: 3206028739498716137}
+  - component: {fileID: 7930328556457538745}
   m_Layer: 0
   m_Name: dan-3
   m_TagString: Barrage
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 4
---- !u!61 &3206028739498716137
+--- !u!61 &7930328556457538745
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,12 +113,12 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.25, y: 0.60897434}
+    oldSize: {x: 0.15234375, y: 0.37109375}
     newSize: {x: 0.39, y: 0.95}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.60897434}
+  m_Size: {x: 0.15234375, y: 0.37109375}
   m_EdgeRadius: 0

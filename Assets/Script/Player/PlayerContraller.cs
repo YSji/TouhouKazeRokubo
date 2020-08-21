@@ -10,6 +10,9 @@ public class PlayerContraller : MonoBehaviour
     float speed;
     float _getHitCD;
     public GameObject check;
+
+    Vector3 pos;
+    Vector3 posChange;
     Vector3 leftBtm_cornerPos;
     Vector3 rightTop_cornerPos;
     float leftBorder;
@@ -33,6 +36,7 @@ public class PlayerContraller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Movement();
         if (!GameManager.Instance._isPause)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -46,22 +50,23 @@ public class PlayerContraller : MonoBehaviour
                 check.SetActive(false);
             }
             _getHitCD -= Time.deltaTime;
-            Movement();
         }
+    }
+    private void FixedUpdate()
+    {
+
     }
     void Movement()
     {
-        Vector3 pos = transform.position;
+        pos = transform.position;
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        //Debug.Log(horizontal);
-        //Debug.Log(vertical);
-        Vector3 position =Vector3.zero;
-        position.x = horizontal * Mathf.Sqrt(1 - (vertical * vertical) / 2.0f);
-        position.y = vertical * Mathf.Sqrt(1 - (horizontal * horizontal) / 2.0f);
-        position.x *= speed * Time.deltaTime;
-        position.y *= speed * Time.deltaTime;
-        pos += position;
+        posChange =Vector3.zero;
+        posChange.x = horizontal * Mathf.Sqrt(1 - (vertical * vertical) / 2.0f);
+        posChange.y = vertical * Mathf.Sqrt(1 - (horizontal * horizontal) / 2.0f);
+        posChange.x *= speed * Time.deltaTime;
+        posChange.y *= speed * Time.deltaTime;
+        pos += posChange;
         if (pos.x <= leftBorder)
         {
             pos.x = leftBorder;
