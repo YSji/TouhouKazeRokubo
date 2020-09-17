@@ -41,7 +41,7 @@ public class PlayerContraller : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                speed /= shiftRate;
+                speed *= shiftRate;
                 check.SetActive(true);
             }
             if (Input.GetKeyUp(KeyCode.Space))

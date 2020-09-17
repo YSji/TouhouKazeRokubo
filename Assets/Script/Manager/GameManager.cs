@@ -10,6 +10,7 @@ using NAudio.Wave;
 using UnityEngine.Networking;
 
 using UnityEngine.UI;
+using System.Diagnostics;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -96,6 +97,7 @@ public class GameManager : Singleton<GameManager>
         {
             GameEnd();
         }
+        
     }
     IEnumerator GameStartWait()
     {
@@ -124,9 +126,11 @@ public class GameManager : Singleton<GameManager>
         progressBar.SetActive(false);
         _mori.SetActive(false);
         audioS.loop = true;
+
         if (!audioS.isPlaying)
         {
             audioS.Play();
+            
         }
         Debug.print("结束");
 
@@ -159,6 +163,11 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }
+    /// <summary>
+    /// 加载文件为AudioClip
+    /// </summary>
+    /// <param name="file"></param>
+    /// <returns></returns>
     IEnumerator GetAudioClip(OpenFileName file)
     {
         string path = file.file;
